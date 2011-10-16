@@ -3,6 +3,8 @@
 /twistd.pid
 /http.log*
 /state.sqlite
+/slaves.json
+/passwd.json
 /*~
 /public_html/binaries
 # Builders
