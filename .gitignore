@@ -1,0 +1,8 @@
+/*.pyc
+/twistd.log*
+/twistd.pid
+/http.log*
+/state.sqlite
+/*~
+/public_html/binaries
+# Builders
