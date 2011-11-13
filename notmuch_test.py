@@ -8,7 +8,7 @@ class NotmuchTestObserver(LogLineObserver):
     test_line_re = re.compile(' ([A-Z]*) *(.*)')
     output_line_re = re.compile('\t(.*)')
     test_group_line_re = re.compile('([a-z-]*): *(.*)')
-    summary_line_re = re.compile('Notmuch test suite complete.')
+    summary_line_re = re.compile(r'Notmuch test suite complete\.')
     finished = False
     current_header = None
 
@@ -63,30 +63,37 @@ class NotmuchTestObserver(LogLineObserver):
             self.problems.addStdout("%s\n" % line)
 
     def processSummaryLine(self, line):
-        m = re.match('All (\d+) tests? passed.', line)
+        m = re.match(r'All (\d+) tests? passed\.', line)
         if m:
             self.results['passed'] = self.results['total'] = int(m.group(1))
-        m = re.match('All (\d+) tests? behaved as expected \((\d+) expected failures?\).', line)
+	    return
+        m = re.match(r'All (\d+) tests? behaved as expected \((\d+) expected failures?\)\.', line)
         if m:
             self.results['total'] = int(m.group(1))
             self.results['broken'] = int(m.group(2))
             self.results['passed'] = self.results['total'] - self.results['broken']
-        m = re.match('(\d+)/(\d+) tests passed.', line)
+	    return
+        m = re.match(r'(\d+)/(\d+) tests passed\.', line)
         if m:
             self.results['passed'] = int(m.group(1))
             self.results['total'] = int(m.group(2))
-        m = re.match('(\d+) broken tests? failed as expected.', line)
+	    return
+        m = re.match(r'(\d+) broken tests? failed as expected\.', line)
         if m:
             self.results['broken'] = int(m.group(1))
-        m = re.match('(\d+) broken tests? now fixed.', line)
+	    return
+        m = re.match(r'(\d+) broken tests? now fixed\.', line)
         if m:
             self.results['fixed'] = int(m.group(1))
-        m = re.match('(\d+) tests? failed.', line)
+	    return
+        m = re.match(r'(\d+) tests? failed\.', line)
         if m:
             self.results['failed'] = int(m.group(1))
-        m = re.match('(\d+) tests? skipped.', line)
+	    return
+        m = re.match(r'(\d+) tests? skipped\.', line)
         if m:
             self.results['skipped'] = int(m.group(1))
+	    return
 
 class NotmuchTest(ShellCommand):
     name = "tests"
