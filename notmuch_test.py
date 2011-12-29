@@ -9,21 +9,21 @@ class NotmuchTestObserver(LogLineObserver):
     output_line_re = re.compile('\t(.*)')
     test_group_line_re = re.compile('([a-z-]*): *(.*)')
     summary_line_re = re.compile(r'Notmuch test suite complete\.')
-    finished = False
-    current_header = None
-
-    numTests = 0
-    results = {'total': 0,
-               'broken': 0,
-               'fixed': 0,
-               'skipped': 0,
-               'failed': 0,
-               'passed': 0,
-              }
 
     def __init__(self, problems, **kwargs):
         LogLineObserver.__init__(self, **kwargs)
         self.problems = problems
+	self.results = {
+			'total': 0,
+			'broken': 0,
+			'fixed': 0,
+			'skipped': 0,
+			'failed': 0,
+			'passed': 0,
+			}
+	self.numTests = 0
+	self.finished = False
+	self.current_header = None
 
 
     def outLineReceived(self, line):
