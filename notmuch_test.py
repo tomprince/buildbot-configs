@@ -13,17 +13,17 @@ class NotmuchTestObserver(LogLineObserver):
     def __init__(self, problems, **kwargs):
         LogLineObserver.__init__(self, **kwargs)
         self.problems = problems
-	self.results = {
-			'total': 0,
-			'broken': 0,
-			'fixed': 0,
-			'skipped': 0,
-			'failed': 0,
-			'passed': 0,
-			}
-	self.numTests = 0
-	self.finished = False
-	self.current_header = None
+        self.results = {
+                'total': 0,
+                'broken': 0,
+                'fixed': 0,
+                'skipped': 0,
+                'failed': 0,
+                'passed': 0,
+                }
+        self.numTests = 0
+        self.finished = False
+        self.current_header = None
 
 
     def outLineReceived(self, line):
@@ -66,34 +66,34 @@ class NotmuchTestObserver(LogLineObserver):
         m = re.match(r'All (\d+) tests? passed\.', line)
         if m:
             self.results['passed'] = self.results['total'] = int(m.group(1))
-	    return
+            return
         m = re.match(r'All (\d+) tests? behaved as expected \((\d+) expected failures?\)\.', line)
         if m:
             self.results['total'] = int(m.group(1))
             self.results['broken'] = int(m.group(2))
             self.results['passed'] = self.results['total'] - self.results['broken']
-	    return
+            return
         m = re.match(r'(\d+)/(\d+) tests passed\.', line)
         if m:
             self.results['passed'] = int(m.group(1))
             self.results['total'] = int(m.group(2))
-	    return
+            return
         m = re.match(r'(\d+) broken tests? failed as expected\.', line)
         if m:
             self.results['broken'] = int(m.group(1))
-	    return
+            return
         m = re.match(r'(\d+) broken tests? now fixed\.', line)
         if m:
             self.results['fixed'] = int(m.group(1))
-	    return
+            return
         m = re.match(r'(\d+) tests? failed\.', line)
         if m:
             self.results['failed'] = int(m.group(1))
-	    return
+            return
         m = re.match(r'(\d+) tests? skipped\.', line)
         if m:
             self.results['skipped'] = int(m.group(1))
-	    return
+            return
 
 class NotmuchTest(ShellCommand):
     name = "tests"
@@ -106,16 +106,16 @@ class NotmuchTest(ShellCommand):
         ShellCommand.__init__(self, **kwargs)
         self.addFactoryArguments(emacs=emacs)
 
-	command=['make', 'test']
-	if emacs:
-		command += [ 'TEST_EMACS=' + emacs ]
-	self.setCommand(command)
-	
+        command=['make', 'test']
+        if emacs:
+                command += [ 'TEST_EMACS=' + emacs ]
+        self.setCommand(command)
+
     def setupLogfiles(self, cmd, logfiles):
         problems = self.addLog("problems")
         self.logobserver = NotmuchTestObserver(problems)
         self.addLogObserver('stdio', self.logobserver)
-	ShellCommand.setupLogfiles(self, cmd, logfiles)
+        ShellCommand.setupLogfiles(self, cmd, logfiles)
         
     def commandComplete(self, cmd):
         counts = self.logobserver.results
