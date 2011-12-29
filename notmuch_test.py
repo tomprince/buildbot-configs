@@ -102,9 +102,14 @@ class NotmuchTest(ShellCommand):
 
     flunkOnFailure = True
     
-    def __init__(self, **kwargs):
-        ShellCommand.__init__(self, command=['make', 'test'],  **kwargs)
-        self.addFactoryArguments()
+    def __init__(self, emacs = None, **kwargs):
+        ShellCommand.__init__(self, **kwargs)
+        self.addFactoryArguments(emacs=emacs)
+
+	command=['make', 'test']
+	if emacs:
+		command += [ 'TEST_EMACS=' + emacs ]
+	self.setCommand(command)
 	
     def setupLogfiles(self, cmd, logfiles):
         problems = self.addLog("problems")
