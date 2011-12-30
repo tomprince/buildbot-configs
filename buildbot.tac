@@ -6,7 +6,7 @@ from buildbot.master import BuildMaster
 
 basedir = r'/Depot/BuildBot/master/gemrb'
 rotateLength = 1000000
-maxRotatedFiles = None
+maxRotatedFiles = 10
 
 # if this is a relocatable tac file, get the directory containing the TAC
 if basedir == '.':
