@@ -8,5 +8,3 @@ Disallow: /one_line_per_build
 Disallow: /builders
 Disallow: /grid
 Disallow: /tgrid
-Disallow: /buildstatus
-Disallow: /json
