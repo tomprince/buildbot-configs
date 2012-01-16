@@ -1,0 +1,13 @@
+diff --git a/slave/buildslave/bot.py b/slave/buildslave/bot.py
+index 86ee80b..8e2bd37 100644
+--- a/slave/buildslave/bot.py
++++ b/slave/buildslave/bot.py
+@@ -449,7 +449,7 @@ class BuildSlave(service.MultiService):
+         self.allow_shutdown = allow_shutdown
+         bf = self.bf = BotFactory(buildmaster_host, port, keepalive, maxdelay)
+         bf.startLogin(credentials.UsernamePassword(name, passwd), client=bot)
+-        self.connection = c = internet.TCPClient(buildmaster_host, port, bf)
++        self.connection = c = internet.UNIXClient(buildmaster_host, bf)
+         c.setServiceParent(self)
+ 
+     def startService(self):
