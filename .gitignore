@@ -6,5 +6,6 @@
 /slaves.json
 /passwd.json
 /*~
-/public_html/binaries
+/gembot-ssh-key
+/gembot-ssh-key.pub
 # Builders
