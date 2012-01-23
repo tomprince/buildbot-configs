@@ -2,10 +2,22 @@
 /twistd.log*
 /twistd.pid
 /http.log*
-/state.sqlite
+/state.sqlite*
 /slaves.json
 /passwd.json
 /*~
 /gembot-ssh-key
 /gembot-ssh-key.pub
+# Poller
+/git-cache
 # Builders
+/autotools-clang++
+/autotools-g++-4.?
+/cmake-clang++
+/cmake-g++-4.?
+/mingw32
+/msvc++6
+/nmake-msvc++10
+/nmake-msvc++6
+/osx-test
+/osx-xcode-binary
