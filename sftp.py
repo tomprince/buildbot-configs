@@ -79,7 +79,9 @@ class SFTPSession(SSHChannel):
 class SFTPConnection(SSHConnection):
     def serviceStarted(self):
         self.openChannel(SFTPSession())
-
+    def channelClosed(self, channel):
+        SSHConnection.channelClosed(self, channel)
+        self.transport.transport.loseConnection()
 
 def sftp(user, host, port, privkey, known_hosts):
     options = ClientOptions()
@@ -124,6 +126,9 @@ class _FileWriter(pb.Referenceable):
 
     def remote_utime(self, accessed_modified):
         pass
+
+    def remote_close(self, *args):
+	pass
 
     def close(self):
         """
@@ -236,7 +241,7 @@ class SFTPUploadPassthrough(BuildStep):
         d.addCallback(self.finished).addErrback(self.failed)
 
     def _closeSFTPConnection(self, res):
-        self._fw.queue.addCallback(lambda _:
+        self._fw.queue.addBoth(lambda _:
                 self._sftp_conn.transport.loseConnection())
         self._fw.queue.addCallback(lambda _: res)
         return self._fw.queue
