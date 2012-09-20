@@ -4,7 +4,7 @@ import os
 from twisted.application import service
 from buildbot.master import BuildMaster
 
-basedir = r'/Depot/BuildBot/master/gemrb'
+basedir = r'.'
 rotateLength = 1000000
 maxRotatedFiles = 10
 
